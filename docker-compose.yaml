@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  wisdom-server-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "8080:8080"
+    networks:
+      - wisdom_network
+    container_name: wisdom-server-1
+
+  wisdom-client-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    networks:
+      - wisdom_network
+    container_name: wisdom-client-1
+    depends_on:
+      - wisdom-server-1
+
+networks:
+  wisdom_network:
