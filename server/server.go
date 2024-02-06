@@ -8,7 +8,6 @@ import (
 	"fmt"
 	mathrand "math/rand"
 	"net"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -30,18 +29,6 @@ func isValidProof(challenge, response string) bool {
 	combined := challenge + response
 	hash := sha256.Sum256([]byte(combined))
 	return strings.HasPrefix(hex.EncodeToString(hash[:]), targetPrefix)
-}
-
-// solveProofOfWork finds a valid proof-of-work response
-func solveProofOfWork(challenge string) string {
-	var nonce uint64
-	for {
-		nonceStr := strconv.FormatUint(nonce, 10)
-		if isValidProof(challenge, nonceStr) {
-			return nonceStr
-		}
-		nonce++
-	}
 }
 
 var wordsOfWisdom = []string{
